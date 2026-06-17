@@ -88,6 +88,39 @@ curl -fsSL -o ~/.claude/skills/buaa-final-assignment/evals/evals.json https://ra
 }
 ```
 
+### 方式 5：指定平台安装（推荐多平台用户）
+
+如果需要安装到特定平台，使用 `--platform` 参数：
+
+```bash
+# 安装到 Claude Code（自动检测）
+bash install.sh --platform claude
+
+# 安装到 Trae
+bash install.sh --platform trae
+
+# 安装到腾讯 CodeBuddy
+bash install.sh --platform codebuddy
+
+# 安装到阿里通义灵码
+bash install.sh --platform lingma
+
+# 安装到智谱AI CodeGeeX
+bash install.sh --platform codegeex
+
+# 安装到 Fitten Code
+bash install.sh --platform fitten
+
+# 安装到 Codex（部分兼容）
+bash install.sh --platform codex
+
+# 安装到所有平台
+bash install.sh --all
+
+# 查看支持的平台列表
+bash install.sh --list
+```
+
 ## 🎯 安装方式对比
 
 | 方式 | 难度 | 需要 git | 适用人群 |
