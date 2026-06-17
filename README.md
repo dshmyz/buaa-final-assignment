@@ -1,6 +1,6 @@
-# 北航结课作业/课程论文生成 Skill
+# 北航结课作业/课程论文辅助 Skill
 
-一个用于 AI 智能体的技能，帮助生成符合北航模板要求的课程论文 Word 文档。支持 Claude Code、Trae、Codex 等多个平台。
+一个用于 AI 智能体的技能，辅助用户根据北航模板准备课程论文 Word 文档。支持 Claude Code、Trae、Codex 等多个平台。
 
 ## ⚠️ 免责声明
 
@@ -108,7 +108,7 @@ curl -fsSL -o ~/.claude/skills/buaa-final-assignment/evals/evals.json https://ra
 {
   "buaa-final-assignment": {
     "name": "buaa-final-assignment",
-    "description": "北航结课作业/课程论文生成技能",
+    "description": "北航结课作业/课程论文辅助技能",
     "path": "/Users/你的用户名/.claude/skills/buaa-final-assignment/SKILL.md"
   }
 }
