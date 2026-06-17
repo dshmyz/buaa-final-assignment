@@ -46,18 +46,82 @@
 - **智能收集**：引导式提问收集必要信息，缺项先用占位符
 - **多平台支持**：支持 Claude Code、Trae、Codex 等多个 AI 智能体
 
-## 🚀 快速安装（一键脚本）
+## 🚀 快速安装
 
-### 推荐方式：自动检测平台
+### 方式 1：一键下载脚本（最简单）⭐
+
+不需要 git，只需要一条命令：
 
 ```bash
-# 克隆仓库
-git clone https://github.com/dshmyz/buaa-final-assignment.git
+# 自动下载并安装到 Claude Code
+curl -fsSL https://raw.githubusercontent.com/dshmyz/buaa-final-assignment/main/install.sh | bash
+```
 
-# 运行安装脚本（自动检测已安装的平台）
+或者下载后运行：
+
+```bash
+# 下载安装脚本
+curl -fsSL -o install.sh https://raw.githubusercontent.com/dshmyz/buaa-final-assignment/main/install.sh
+
+# 运行安装
+bash install.sh
+```
+
+### 方式 2：下载 ZIP 压缩包
+
+1. 访问 https://github.com/dshmyz/buaa-final-assignment
+2. 点击绿色的 **"Code"** 按钮
+3. 选择 **"Download ZIP"**
+4. 解压 ZIP 文件
+5. 运行安装脚本：
+
+```bash
+cd buaa-final-assignment-main
+bash install.sh
+```
+
+### 方式 3：使用 git（推荐有基础的用户）
+
+```bash
+git clone https://github.com/dshmyz/buaa-final-assignment.git
 cd buaa-final-assignment
 bash install.sh
 ```
+
+### 方式 4：手动安装（完全手动）
+
+```bash
+# 1. 创建目录
+mkdir -p ~/.claude/skills/buaa-final-assignment/{scripts,assets/templates,evals}
+
+# 2. 下载各个文件
+curl -fsSL -o ~/.claude/skills/buaa-final-assignment/SKILL.md https://raw.githubusercontent.com/dshmyz/buaa-final-assignment/main/SKILL.md
+curl -fsSL -o ~/.claude/skills/buaa-final-assignment/scripts/build_from_template.py https://raw.githubusercontent.com/dshmyz/buaa-final-assignment/main/scripts/build_from_template.py
+curl -fsSL -o ~/.claude/skills/buaa-final-assignment/assets/templates/buaa-course-paper-template.docx https://raw.githubusercontent.com/dshmyz/buaa-final-assignment/main/assets/templates/buaa-course-paper-template.docx
+curl -fsSL -o ~/.claude/skills/buaa-final-assignment/evals/evals.json https://raw.githubusercontent.com/dshmyz/buaa-final-assignment/main/evals/evals.json
+
+# 3. 注册到 Claude Code（需要编辑文件）
+# 手动编辑 ~/.claude/skills/.skills-manifest.json，添加以下内容：
+```
+
+```json
+{
+  "buaa-final-assignment": {
+    "name": "buaa-final-assignment",
+    "description": "北航结课作业/课程论文生成技能",
+    "path": "/Users/你的用户名/.claude/skills/buaa-final-assignment/SKILL.md"
+  }
+}
+```
+
+## 🎯 安装方式对比
+
+| 方式 | 难度 | 需要 git | 适用人群 |
+|------|------|---------|---------|
+| **方式 1：一键脚本** | ⭐ 最简单 | ❌ 不需要 | 所有人 |
+| **方式 2：下载 ZIP** | ⭐⭐ 简单 | ❌ 不需要 | 不会命令行的人 |
+| **方式 3：git clone** | ⭐⭐⭐ 中等 | ✅ 需要 | 有基础的用户 |
+| **方式 4：手动下载** | ⭐⭐⭐⭐ 较难 | ❌ 不需要 | 完全手动控制 |
 
 ### 指定平台安装
 
