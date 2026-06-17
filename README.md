@@ -2,6 +2,22 @@
 
 一个用于 AI 智能体的技能，辅助用户根据北航模板准备课程论文 Word 文档。支持 Claude Code、Trae、Codex 等多个平台。
 
+## ✨ 功能特点
+
+- **模板保留**：完全保留原模板的 Logo、封面表格、段落样式、字体字号
+- **自动填充**：封面信息自动填入表格，日期使用当前系统日期
+- **格式标准**：
+  - 封面题目：黑体二号
+  - 封面其他内容：宋体四号，数字字母用 Times New Roman
+  - 正文标题：宋体三号加粗
+  - 标题段落：黑体三号，无首行缩进
+  - 正文段落：宋体小四，首行缩进
+- **学术改写**：内置 10 阶学术语言优化流水线，降低 AI 味
+- **智能收集**：引导式提问收集必要信息，缺项先用占位符
+- **多平台支持**：支持 Claude Code、Trae、Codex 等多个 AI 智能体
+
+---
+
 ## ⚠️ 免责声明
 
 ### 学术诚信
@@ -31,20 +47,6 @@
 - 本工具按"现状"提供，不保证生成内容的学术适用性
 
 ---
-
-## ✨ 功能特点
-
-- **模板保留**：完全保留原模板的 Logo、封面表格、段落样式、字体字号
-- **自动填充**：封面信息自动填入表格，日期使用当前系统日期
-- **格式标准**：
-  - 封面题目：黑体二号
-  - 封面其他内容：宋体四号，数字字母用 Times New Roman
-  - 正文标题：宋体三号加粗
-  - 标题段落：黑体三号，无首行缩进
-  - 正文段落：宋体小四，首行缩进
-- **学术改写**：内置 10 阶学术语言优化流水线，降低 AI 味
-- **智能收集**：引导式提问收集必要信息，缺项先用占位符
-- **多平台支持**：支持 Claude Code、Trae、Codex 等多个 AI 智能体
 
 ## 🚀 快速安装
 
@@ -123,27 +125,7 @@ curl -fsSL -o ~/.claude/skills/buaa-final-assignment/evals/evals.json https://ra
 | **方式 3：git clone** | ⭐⭐⭐ 中等 | ✅ 需要 | 有基础的用户 |
 | **方式 4：手动下载** | ⭐⭐⭐⭐ 较难 | ❌ 不需要 | 完全手动控制 |
 
-### 指定平台安装
-
-```bash
-# 只安装到 Claude Code
-bash install.sh --platform claude
-
-# 只安装到 Trae
-bash install.sh --platform trae
-
-# 只安装到 Codex（部分兼容）
-bash install.sh --platform codex
-
-# 安装到所有已检测到的平台
-bash install.sh --all
-```
-
-### 查看支持的平台
-
-```bash
-bash install.sh --list
-```
+---
 
 ## 📦 支持的平台
 
@@ -164,98 +146,184 @@ bash install.sh --list
 | **CodeGeeX** | 智谱AI | ✅ 支持 | `.codegeex/` | Markdown 规则文件 |
 | **Fitten Code** | - | ✅ 支持 | `~/.fitten/rules/` | Markdown 规则文件 |
 
-## 📋 手动安装
+---
 
-### Claude Code
+## 📖 详细使用文档
 
-```bash
-git clone https://github.com/dshmyz/buaa-final-assignment.git
-cp -r buaa-final-assignment ~/.claude/skills/
-# 手动编辑 ~/.claude/skills/.skills-manifest.json 添加注册信息
+### 项目结构
+
+```
+buaa-final-assignment/
+├── SKILL.md                              # 技能说明（Claude Code 格式）
+├── README.md                             # 使用文档
+├── install.sh                            # 多平台安装脚本
+├── .gitignore                            # Git 忽略规则
+├── scripts/
+│   └── build_from_template.py            # DOCX 文档生成脚本（核心引擎）
+├── assets/
+│   └── templates/
+│       └── buaa-course-paper-template.docx  # 北航课程论文模板
+└── evals/
+    └── evals.json                        # 测试用例
 ```
 
-### Trae
+### 核心组件
+
+| 文件 | 用途 | 说明 |
+|------|------|------|
+| `SKILL.md` | Claude Code 技能定义 | 包含触发条件、工作流、格式要求等 |
+| `install.sh` | 多平台安装脚本 | 自动检测平台，支持 Claude/Trae/国内平台 |
+| `build_from_template.py` | DOCX 生成引擎 | 解析模板、填充内容、保留格式 |
+| `buaa-course-paper-template.docx` | 北航模板 | 包含封面表格、段落样式、Logo |
+
+### 使用方法
+
+#### 方法 1：通过 AI 智能体使用（推荐）
+
+1. 安装技能到你的 AI 智能体
+2. 重启智能体
+3. 输入：`/buaa-final-assignment` 或 `帮我做北航结课论文`
+4. 按提示输入课程信息、姓名、学号等
+5. AI 会生成草稿供你审核修改
+
+#### 方法 2：直接使用脚本
 
 ```bash
-git clone https://github.com/dshmyz/buaa-final-assignment.git
-cp -r buaa-final-assignment ~/.trae/builtin_skills/
-# 重启 Trae 即可
-```
-
-### Codex
-
-```bash
-git clone https://github.com/dshmyz/buaa-final-assignment.git
-cp -r buaa-final-assignment ~/.codex/skills/
-# 注意：需要将 SKILL.md 转换为 AGENTS.md 格式
-# 建议使用安装脚本自动转换
-```
-
-`your_paper.json` 格式：
-
-```json
+# 准备内容 JSON
+cat > paper.json << 'EOF'
 {
-  "title": "论文题目",
+  "title": "你的论文题目",
   "cover": [
-    "课程名称：...",
-    "姓名：...",
-    "学号：...",
-    "学院：...",
-    "专业：..."
+    "课程名称：课程名",
+    "姓名：姓名",
+    "学号：学号",
+    "学院：学院"
   ],
-  "abstract": "摘要正文...",
-  "keywords": "关键词1；关键词2；关键词3",
+  "abstract": "你的摘要...",
+  "keywords": "关键词1；关键词2",
   "sections": [
     {"title": "引言", "paragraphs": ["..."]},
     {"title": "一、...", "paragraphs": ["..."]}
   ],
-  "references": ["[1] ...", "[2] ..."],
+  "references": ["[1] ..."],
   "ai_disclosure": ""
 }
+EOF
+
+# 生成文档
+python scripts/build_from_template.py \
+  --template assets/templates/buaa-course-paper-template.docx \
+  --content paper.json \
+  --output "课程名-学号-姓名-论文题目.docx"
 ```
 
-## 📝 格式要求
+### 格式规范
 
-### 封面表格
+#### 封面表格
 
-- Row 1（论文题目）：**黑体二号**（size=44）
-- Row 3-6（课程名、姓名、学院、日期）：**宋体四号**（size=28），数字字母用 Times New Roman
+| 位置 | 内容 | 字体 | 字号 |
+|------|------|------|------|
+| Row 1 | 论文题目 | 黑体 | 二号（44） |
+| Row 3 | 课程名称 | 宋体 + Times New Roman | 四号（28） |
+| Row 4 | 姓名+学号 | 宋体 + Times New Roman | 四号（28） |
+| Row 5 | 学院 | 宋体 + Times New Roman | 四号（28） |
+| Row 6 | 日期 | 宋体 + Times New Roman | 四号（28） |
 
-### 正文格式
+#### 正文格式
 
-- 论文标题：宋体三号加粗
-- 一级标题：黑体三号，无首行缩进
-- 正文段落：宋体小四，首行缩进
-- 参考文献标题：黑体三号，无首行缩进
-- 参考文献条目：宋体小四，首行缩进
+| 位置 | 字体 | 字号 | 加粗 | 首行缩进 |
+|------|------|------|------|---------|
+| 论文题目 | 宋体 | 三号（32） | ✓ | 无 |
+| 一级标题 | 黑体 | 三号（32） | ✗ | 无 |
+| 正文段落 | 宋体 | 小四（24） | ✗ | 有（480） |
+| 摘要 | 宋体 | 小四（24） | ✗ | 有（440） |
+| 关键词 | 宋体 | 小四（24） | ✗ | 有（440） |
 
-## 🔄 学术改写流水线
+### 10 阶语言优化流水线
 
-内置 10 阶学术语言优化：
+技能会自动执行以下流程优化论文语言：
 
-1. 口语正式化
-2. 套话清理
-3. 客观转写
-4. 长句拆分
-5. 逻辑衔接
-6. 适度名词化
-7. 术语校准
-8. 冗余压缩
-9. 重点调整
-10. 语义核验
+| 阶段 | 步骤 | 目的 |
+|------|------|------|
+| 一阶处理 | 1. 口语正式化 | 去口语化 |
+| 一阶处理 | 2. 套话清理 | 删除"众所周知"等 |
+| 一阶处理 | 3. 客观转写 | 第一人称改第三人称 |
+| 二阶重构 | 4. 长句拆分 | 拆解复杂句 |
+| 二阶重构 | 5. 逻辑衔接 | 优化过渡词 |
+| 二阶重构 | 6. 适度名词化 | 提升信息密度 |
+| 三阶校准 | 7. 术语校准 | 规范专业术语 |
+| 三阶校准 | 8. 冗余压缩 | 删除重复修饰 |
+| 三阶校准 | 9. 重点调整 | 调整句子焦点 |
+| 最终审计 | 10. 语义核验 | 确保不改变原意 |
 
-## 📋 自检清单
+### 常见问题
 
-生成文档后自动检查：
+#### Q: 生成的文档格式不对怎么办？
 
-- ✅ Logo 保留
-- ✅ 封面表格内容填入
-- ✅ 段落格式正确
-- ✅ 字体字号正确
-- ✅ 日期自动填入
-- ✅ 无模板残留
-- ✅ 引用规范
+A: 检查是否使用了正确的模板文件 `buaa-course-paper-template.docx`。如果格式仍有问题，可能是模板文件损坏，重新克隆仓库即可。
 
-## 📄 License
+#### Q: 封面表格没有正确填充？
+
+A: 确保 `paper.json` 中的 `cover` 字段格式正确，包含 4 个元素：`["课程名称：...", "姓名：...", "学号：...", "学院：..."]`
+
+#### Q: 日期不是当前日期？
+
+A: 脚本会自动使用当前系统日期，格式为 `YYYY年MM月DD日`。如果日期错误，检查系统时间设置。
+
+#### Q: 支持 PDF 模板吗？
+
+A: 目前只支持 `.docx` 格式的模板。如果只有 PDF，需要先转换为 Word 格式。
+
+#### Q: 如何修改论文内容？
+
+A: 生成后用 Word 打开，直接编辑内容。格式会自动保留，无需担心格式错乱。
+
+### 贡献指南
+
+欢迎贡献！请遵循以下步骤：
+
+1. Fork 本仓库
+2. 创建特性分支：`git checkout -b feature/amazing-feature`
+3. 提交更改：`git commit -m 'Add amazing feature'`
+4. 推送分支：`git push origin feature/amazing-feature`
+5. 创建 Pull Request
+
+### 更新日志
+
+#### v1.0.0 (2026-06-17)
+
+- ✨ 初始发布
+- ✅ 支持北航课程论文模板
+- ✅ 支持 Claude Code、Trae、Codex
+- ✅ 支持国内平台：CodeBuddy、通义灵码、CodeGeeX、Fitten
+- ✅ 一键安装脚本
+- ✅ 10 阶语言优化流水线
+- ✅ 多种安装方式
+
+### 许可证
 
 MIT License
+
+### 联系方式
+
+- GitHub: https://github.com/dshmyz/buaa-final-assignment
+- Issues: https://github.com/dshmyz/buaa-final-assignment/issues
+
+---
+
+## 📊 技术栈
+
+- **Python 3.x** - 文档生成脚本
+- **xml.etree.ElementTree** - DOCX XML 解析
+- **json** - 配置文件处理
+- **zipfile** - DOCX 压缩包处理
+
+## 🙏 致谢
+
+- 北京航空航天大学 - 提供课程论文模板
+- Claude Code - 技能框架设计参考
+- 所有贡献者和用户
+
+---
+
+**⭐ 如果这个项目对你有帮助，请给个 Star 支持一下！**
