@@ -110,31 +110,15 @@ install_trae() {
     echo "💡 重启 Trae 即可使用"
 }
 
-# 安装到 Codex（转换格式）
-install_codex() {
-    echo "📦 安装到 Codex..."
-    TARGET_DIR="$HOME/.codex/skills/buaa-final-assignment"
+# 安装到腾讯 CodeBuddy
+install_codebuddy() {
+    echo "📦 安装到腾讯 CodeBuddy..."
+    TARGET_DIR=".codebuddy/rules"
 
-    # 创建目标目录
-    if [ -d "$TARGET_DIR" ]; then
-        read -p "⚠️  目录已存在，是否覆盖? (y/N): " confirm
-        if [[ ! $confirm =~ ^[Yy]$ ]]; then
-            echo "❌ 安装取消"
-            exit 0
-        fi
-        rm -rf "$TARGET_DIR"
-    fi
+    mkdir -p "$TARGET_DIR"
 
-    mkdir -p "$TARGET_DIR"/{scripts,assets/templates,evals}
-
-    # 复制文件
-    echo "📦 复制文件..."
-    cp ./scripts/build_from_template.py "$TARGET_DIR/scripts/"
-    cp ./assets/templates/buaa-course-paper-template.docx "$TARGET_DIR/assets/templates/"
-    cp ./evals/evals.json "$TARGET_DIR/evals/"
-
-    # 转换 SKILL.md 为 AGENTS.md（Codex 格式）
-    echo "🔄 转换格式为 AGENTS.md..."
+    # 转换 SKILL.md 为规则文件
+    echo "🔄 转换为 CodeBuddy 规则格式..."
     python3 -c "
 import re
 from pathlib import Path
@@ -144,21 +128,120 @@ skill_md = Path('./SKILL.md').read_text(encoding='utf-8')
 # 移除 YAML frontmatter
 skill_md = re.sub(r'^---.*?---\n', '', skill_md, flags=re.DOTALL)
 
-# 添加 Codex 兼容的标题
-agents_md = f'''# BUAA Final Assignment Skill
+rules_md = f'''# BUAA Final Assignment Skill
 
-> 注意：此技能原本为 Claude Code 设计，已转换为 Codex 兼容格式
+> 北航结课作业/课程论文生成技能
 
 {skill_md}
 '''
 
-Path('$TARGET_DIR/AGENTS.md').write_text(agents_md, encoding='utf-8')
-print('✅ 已转换为 AGENTS.md')
+Path('$TARGET_DIR/buaa-final-assignment.md').write_text(rules_md, encoding='utf-8')
+print('✅ 已转换为 CodeBuddy 规则')
 "
 
-    echo "✅ Codex 安装完成"
-    echo "💡 重启 Codex 即可使用"
-    echo "⚠️  注意：此技能原本为 Claude Code 设计，部分功能可能不完全兼容"
+    echo "✅ CodeBuddy 安装完成"
+    echo "💡 重启 IDE 即可使用"
+}
+
+# 安装到通义灵码
+install_lingma() {
+    echo "📦 安装到通义灵码..."
+    TARGET_DIR=".lingma/rules"
+
+    mkdir -p "$TARGET_DIR"
+
+    # 转换 SKILL.md 为规则文件
+    echo "🔄 转换为通义灵码规则格式..."
+    python3 -c "
+import re
+from pathlib import Path
+
+skill_md = Path('./SKILL.md').read_text(encoding='utf-8')
+
+# 移除 YAML frontmatter
+skill_md = re.sub(r'^---.*?---\n', '', skill_md, flags=re.DOTALL)
+
+rules_md = f'''# BUAA Final Assignment Skill
+
+> 北航结课作业/课程论文生成技能
+
+{skill_md}
+'''
+
+Path('$TARGET_DIR/buaa-final-assignment.md').write_text(rules_md, encoding='utf-8')
+print('✅ 已转换为通义灵码规则')
+"
+
+    echo "✅ 通义灵码安装完成"
+    echo "💡 重启 IDE 即可使用"
+}
+
+# 安装到 CodeGeeX
+install_codegeex() {
+    echo "📦 安装到 CodeGeeX..."
+    TARGET_DIR=".codegeex"
+
+    mkdir -p "$TARGET_DIR"
+
+    # 转换 SKILL.md 为规则文件
+    echo "🔄 转换为 CodeGeeX 规则格式..."
+    python3 -c "
+import re
+from pathlib import Path
+
+skill_md = Path('./SKILL.md').read_text(encoding='utf-8')
+
+# 移除 YAML frontmatter
+skill_md = re.sub(r'^---.*?---\n', '', skill_md, flags=re.DOTALL)
+
+rules_md = f'''# BUAA Final Assignment Skill
+
+> 北航结课作业/课程论文生成技能
+
+{skill_md}
+'''
+
+Path('$TARGET_DIR/rules.md').write_text(rules_md, encoding='utf-8')
+print('✅ 已转换为 CodeGeeX 规则')
+"
+
+    echo "✅ CodeGeeX 安装完成"
+    echo "💡 重启 IDE 即可使用"
+}
+
+# 安装到 Fitten Code
+
+# 安装到 Fitten Code
+install_fitten() {
+    echo "📦 安装到 Fitten Code..."
+    TARGET_DIR="$HOME/.fitten/rules"
+
+    mkdir -p "$TARGET_DIR"
+
+    # 转换 SKILL.md 为规则文件
+    echo "🔄 转换为 Fitten Code 规则格式..."
+    python3 -c "
+import re
+from pathlib import Path
+
+skill_md = Path('./SKILL.md').read_text(encoding='utf-8')
+
+# 移除 YAML frontmatter
+skill_md = re.sub(r'^---.*?---\n', '', skill_md, flags=re.DOTALL)
+
+rules_md = f'''# BUAA Final Assignment Skill
+
+> 北航结课作业/课程论文生成技能
+
+{skill_md}
+'''
+
+Path('$TARGET_DIR/buaa-final-assignment.md').write_text(rules_md, encoding='utf-8')
+print('✅ 已转换为 Fitten Code 规则')
+"
+
+    echo "✅ Fitten Code 安装完成"
+    echo "💡 重启 IDE 即可使用"
 }
 
 # 显示帮助
@@ -166,15 +249,24 @@ show_help() {
     echo "用法: bash install.sh [选项]"
     echo ""
     echo "选项:"
-    echo "  -p, --platform PLATFORM   指定安装平台 (claude|trae|codex|all)"
+    echo "  -p, --platform PLATFORM   指定安装平台"
     echo "  -a, --all                 安装到所有检测到的平台"
     echo "  -l, --list                列出所有支持的平台"
     echo "  -h, --help                显示此帮助信息"
     echo ""
+    echo "支持的平台:"
+    echo "  Claude Code (推荐)    ~/.claude/skills/"
+    echo "  Trae                  ~/.trae/builtin_skills/"
+    echo "  CodeBuddy (腾讯)      .codebuddy/rules/"
+    echo "  通义灵码 (阿里)       .lingma/rules/"
+    echo "  CodeGeeX (智谱AI)     .codegeex/"
+    echo "  Fitten Code           ~/.fitten/rules/"
+    echo "  Codex (OpenAI)        ~/.codex/skills/ (部分兼容)"
+    echo ""
     echo "示例:"
-    echo "  bash install.sh                        # 自动检测平台并安装"
-    echo "  bash install.sh --platform claude      # 只安装到 Claude Code"
-    echo "  bash install.sh --platform trael       # 只安装到 Trae"
+    echo "  bash install.sh                        # 自动检测并安装"
+    echo "  bash install.sh --platform claude      # 安装到 Claude Code"
+    echo "  bash install.sh --platform codebuddy   # 安装到腾讯 CodeBuddy"
     echo "  bash install.sh --all                  # 安装到所有平台"
     echo ""
 }
@@ -182,9 +274,18 @@ show_help() {
 # 列出支持的平台
 list_platforms() {
     echo "支持的平台:"
+    echo ""
+    echo "国际平台:"
     echo "  claude    Claude Code (推荐)"
     echo "  trael     Trae (ByteDance)"
     echo "  codex     Codex (OpenAI) - 部分兼容"
+    echo ""
+    echo "国内平台:"
+    echo "  codebuddy 腾讯 CodeBuddy (原 WorkBuddy)"
+    echo "  lingma    阿里 通义灵码"
+    echo "  codegeex  智谱AI CodeGeeX"
+    echo "  fitten    Fitten Code"
+    echo ""
     echo "  all       所有平台"
     echo ""
     echo "平台检测:"
@@ -271,6 +372,18 @@ else
             ;;
         trael)
             install_trae
+            ;;
+        codebuddy)
+            install_codebuddy
+            ;;
+        lingma)
+            install_lingma
+            ;;
+        codegeex)
+            install_codegeex
+            ;;
+        fitten)
+            install_fitten
             ;;
         codex)
             install_codex

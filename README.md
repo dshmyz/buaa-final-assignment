@@ -147,11 +147,22 @@ bash install.sh --list
 
 ## 📦 支持的平台
 
+### 国际平台
+
 | 平台 | 支持程度 | 安装路径 | 说明 |
 |------|---------|---------|------|
 | **Claude Code** | ✅ 完全支持 | `~/.claude/skills/` | 推荐，格式完全兼容 |
 | **Trae** | ✅ 完全支持 | `~/.trae/builtin_skills/` | 与 Claude Code 格式兼容 |
 | **Codex** | ⚠️ 部分兼容 | `~/.codex/skills/` | 会自动转换为 AGENTS.md 格式 |
+
+### 国内平台
+
+| 平台 | 公司 | 支持程度 | 安装路径 | 规则格式 |
+|------|------|---------|---------|---------|
+| **CodeBuddy** | 腾讯 | ✅ 支持 | `.codebuddy/rules/` | Markdown 规则文件 |
+| **通义灵码** | 阿里 | ✅ 支持 | `.lingma/rules/` | Markdown 规则文件 |
+| **CodeGeeX** | 智谱AI | ✅ 支持 | `.codegeex/` | Markdown 规则文件 |
+| **Fitten Code** | - | ✅ 支持 | `~/.fitten/rules/` | Markdown 规则文件 |
 
 ## 📋 手动安装
 
