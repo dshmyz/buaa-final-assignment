@@ -1,13 +1,13 @@
 ---
 name: buaa-final-assignment
-description: Use this skill whenever the user asks to write, format, revise, brainstorm, or generate a BUAA/北京航空航天大学 course final paper, 结课论文, 课程论文, 结课作业, 思政课论文, or any Chinese university course assignment that must follow a provided DOCX/PDF template. This skill should proactively interview the user for course name, name, student ID, school/major/class, assignment requirements, topic preference, word count, references/materials, and AI disclosure rules; during brainstorming it should explicitly invite the user to upload reference materials such as slides, teacher requirements, textbook chapters, notes, papers, policy documents, or drafts, read them first, then recommend topics/outlines or generate a submission-ready .docx with no remaining placeholders. It can use the bundled BUAA template at assets/templates/buaa-course-paper-template.docx when the user does not provide another template, and it preserves Word template structure, Logo/images, page settings, paragraph styles, cover table content, citation requirements, AI-use disclosure, and anti-formulaic phrasing cleanup.
+description: Use this skill to assist users with BUAA/北京航空航天大学 course final papers when they ask for help with writing, formatting, revising, brainstorming, or organizing content for 结课论文, 课程论文, 结课作业, 思政课论文, or any Chinese university course assignment that follows a DOCX/PDF template. This skill provides drafting assistance and format templates, but users should review and personalize all content before submission. Proactively interview for course name, name, student ID, requirements, and materials; during brainstorming invite users to upload reference materials. Read them first, then assist with topics/outlines or provide a draft .docx template for user customization. Use the bundled template at assets/templates/buaa-course-paper-template.docx when no template is provided. Preserves template structure, Logo/images, styles, and formatting as a starting point for user review.
 ---
 
-# 北航结课作业 / 课程论文生成技能
+# 北航结课作业 / 课程论文辅助技能
 
 ## 目标
 
-帮助用户根据北航课程结课论文/课程考核模板生成可直接提交的 Word 文档。重点不是“写一篇文章”，而是“按老师给的模板交一份能用的文档”：保留模板版式、Logo、页边距、段落样式、字数要求、引用规范和 AI 使用披露，并尽量不让用户事后再手动改姓名、学号、课程名等基础信息。
+**辅助**用户根据北航课程结课论文/课程考核模板准备 Word 文档。重点不是”代替用户写论文”，而是”帮用户按老师给的模板快速搭建框架”：保留模板版式、Logo、页边距、段落样式等格式要素，提供结构化的内容草稿供用户审核、修改和完善。**用户需要对最终内容负责，自行审查、修改并确认后再提交。**
 
 ## 运行过程提示
 
